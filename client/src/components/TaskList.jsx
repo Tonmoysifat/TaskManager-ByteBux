@@ -2,9 +2,11 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {Link} from "react-router-dom";
 import NoTask from "./NoTask.jsx";
+import FullScreenLoader from "./FullScreenLoader.jsx";
 
 const TaskList = () => {
     const [task, setTask] = useState([]);
+    const [loader, setLoader] = useState(true);
 
     useEffect(() => {
         (async () => {
@@ -13,10 +15,13 @@ const TaskList = () => {
     }, []);
     const ReadTasks = async () => {
         try {
+            setLoader(true);
             const res = await axios.get(`/api/readTask`);
             setTask(res.data.Task_data);
         } catch (error) {
             console.error("Error fetching Tasks:", error);
+        } finally {
+            setLoader(false);
         }
     };
     const DeleteTasks = async (id) => {
@@ -25,6 +30,8 @@ const TaskList = () => {
             await ReadTasks();
         } catch (error) {
             console.error("Error fetching Tasks:", error);
+        } finally {
+            setLoader(false);
         }
     };
 
@@ -36,65 +43,75 @@ const TaskList = () => {
               Add Task
             </Link>
           </div>
+            {
+                loader ? (
+                    <FullScreenLoader/>
+                ): (
+                    <>
 
-
-          {
-            task.length === 0 ? (
-                <NoTask/>
-            ) : (
-                <div className="row my-5">
-                        {task.map((item, i) => {
-                            return (
-                                <div key={i} className="col-12">
-                                    <div className="card shadow my-3">
-                                        <div className="card-header">
-                                            <h3 className="position-relative">
-                                                <Link to={`/TaskById/${item["_id"]}`} className="text-decoration-none">{item["taskTitle"]}</Link>
-                                                <span
-                                                    className="position-absolute top-0 start-100 ms-5 si translate-middle badge rounded-pill bg-danger">
+                    {
+                        task.length === 0 ? (
+                            <NoTask/>
+                        ) : (
+                            <div className="row my-5">
+                                {task.map((item, i) => {
+                                    return (
+                                        <div key={i} className="col-12">
+                                            <div className="card shadow my-3">
+                                                <div className="card-header">
+                                                    <h3 className="position-relative">
+                                                        <Link to={`/TaskById/${item["_id"]}`} className="text-decoration-none">{item["taskTitle"]}</Link>
+                                                        <span
+                                                            className="position-absolute top-0 start-100 ms-5 si translate-middle badge rounded-pill bg-danger">
                           {item["taskStatus"]}
-                                                    <span className="visually-hidden">
+                                                            <span className="visually-hidden">
                             unread messages
                           </span>
                         </span>
-                                            </h3>
-                                            <div className="dropdown">
-                                                <a className="btn btn-warning dropdown-toggle" href="#" role="button"
-                                                   data-bs-toggle="dropdown"
-                                                   aria-expanded="false">
-                                                    Action
-                                                </a>
+                                                    </h3>
+                                                    <div className="dropdown">
+                                                        <a className="btn btn-warning dropdown-toggle" href="#" role="button"
+                                                           data-bs-toggle="dropdown"
+                                                           aria-expanded="false">
+                                                            Action
+                                                        </a>
 
-                                                <ul className="dropdown-menu">
-                                                    <li>
-                                                        <Link
-                                                            className="dropdown-item"
-                                                            to={`/updateTask/${item["_id"]}`}
-                                                        >
-                                                            Edit
-                                                        </Link>
-                                                    </li>
-                                                    <li>
-                                                        <button
-                                                            className="dropdown-item"
-                                                            onClick={() => DeleteTasks(item["_id"])}
-                                                        >
-                                                            Delete
-                                                        </button>
-                                                    </li>
-                                                </ul>
+                                                        <ul className="dropdown-menu">
+                                                            <li>
+                                                                <Link
+                                                                    className="dropdown-item"
+                                                                    to={`/updateTask/${item["_id"]}`}
+                                                                >
+                                                                    Edit
+                                                                </Link>
+                                                            </li>
+                                                            <li>
+                                                                <button
+                                                                    className="dropdown-item"
+                                                                    onClick={() => DeleteTasks(item["_id"])}
+                                                                >
+                                                                    Delete
+                                                                </button>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div className="card-body">
+                                                    <p>{item["taskDescription"]}</p>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div className="card-body">
-                                            <p>{item["taskDescription"]}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            );
-                        })}
-                    </div>
+                                    );
+                                })}
+                            </div>
+                        )
+                    }
+                    </>
                 )
             }
+
+
+
 
 
         </div>

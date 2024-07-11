@@ -94,7 +94,7 @@ const UpdateTask = () => {
 
                         <button type="submit"
                                 className="btn submitbtn btn-outline-warning w-100 mt-3">
-                            Add
+                            Update
                         </button>
                     </form>
                 </div>
