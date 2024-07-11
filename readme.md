@@ -23,11 +23,11 @@ You can access the live application [https://task-manager-byte-bux.vercel.app/](
 
 The following endpoints are available in the Task Manager application:
 
-- `GET /tasks`: Retrieve a list of tasks.
-- `GET /tasks/:id`: Retrieve a specific task by ID.
-- `POST /tasks`: Create a new task.
-- `PUT /tasks/:id`: Update an existing task by ID.
-- `DELETE /tasks/:id`: Delete a task by ID.
+- `GET /readTask`: Retrieve a list of tasks.
+- `GET /readBYId/:id`: Retrieve a specific task by ID.
+- `POST /createTask`: Create a new task.
+- `PUT /updateTask/:id`: Update an existing task by ID.
+- `DELETE /deleteTask/:id`: Delete a task by ID.
 
 ## Setup and Run Locally
 
