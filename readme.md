@@ -58,6 +58,10 @@ Navigate to the project directory and install the required dependencies:
 cd TaskManager-ByteBux
 
 npm install
+
+cd client
+
+npm install
 ```
 ### Create ".env" file
 Inside the root project directory (TaskManager-ByteBux) create a ".env" file and add there two environment variables:
@@ -66,6 +70,7 @@ DB_USER = "Your_mongoDB_Atlas_User_name"
 DB_PASS = "Your_mongoDB_Atlas_password"
 ```
 ### Run the Project
+Back to the root directory and run the project using the following command
 ```
 nodemon or node index.js
 ```
