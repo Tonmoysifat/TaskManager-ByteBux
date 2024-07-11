@@ -59,7 +59,7 @@ cd TaskManager-ByteBux
 
 npm install
 ```
-### Craete ".env" file
+### Create ".env" file
 Inside the root project directory (TaskManager-ByteBux) create a ".env" file and add there two environment variables:
 ```
 DB_USER = "Your_mongoDB_Atlas_User_name" 
